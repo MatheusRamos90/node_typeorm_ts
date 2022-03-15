@@ -1,0 +1,40 @@
+version: '3'
+services:
+  postgresdb:
+    container_name: postgresdb
+    image: postgres:11.7
+    env_file: ./.env.prod
+    environment:
+      ALLOW_EMPTY_PASSWORD: 'no'
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5433:${TYPEORM_PORT}'
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  node_typeorm_ts:
+    image: mhramos/node_typeorm_ts:latest
+    env_file: ./.env.prod
+    container_name: node_typeorm_ts
+    build:
+      context: .
+    command: npm run start:docker
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - '${PORT}:${PORT}'
+    depends_on:
+      - postgresdb
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres_data: {}

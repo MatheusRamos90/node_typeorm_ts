@@ -1,0 +1,333 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Create new videos and your categories",
+        "title": "APIs documentation",
+        "version": "1.0.0",
+        "termsOfService": "http://localhost/terms",
+        "contact": {
+            "email": "team@team.com.br"
+        }
+    },
+    "schemes": [
+        "http"
+    ],
+    "tags": [
+        {
+          "name": "categories",
+          "description": "Categorias relacionadas ao vídeos"
+        },
+        {
+          "name": "videos",
+          "description": "Cadastro de videos"
+        }
+      ],
+    "paths": {
+        "/categories": {
+            "get": {
+                "tags": ["categories"],
+                "summary": "Get all categories",
+                "operationId": "getAll",
+                "produces": [
+                  "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                  "200": {
+                    "type": "array",
+                    "schema": {
+                        "$ref": "#/definitions/Category"
+                    }
+                  }
+                },
+                "security": [{ "bearer_auth": []}]
+            },
+            "post": {
+                "tags": ["categories"],
+                "summary": "Create a new category",
+                "operationId": "create",
+                "produces": [
+                  "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Fields are required for create a new category",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/CreateCategory"
+                        }
+                    }
+                ],
+                "responses": {
+                  "201": {
+                    "schema": {
+                        "$ref": "#/definitions/Category"
+                    }
+                  },
+                  "400": {
+                      "description": "Category already exists"
+                  }
+                },
+                "security": [{ "bearer_auth": []}]
+            }
+        },
+        "/categories/{id}": {
+            "put": {
+                "tags": ["categories"],
+                "summary": "Atualiza uma categoria",
+                "operationId": "update",
+                "produces": [
+                  "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Parâmetro do campo 'id'",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Os campos são obrigatórios para atualizar uma categoria",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/UpdateCategory"
+                        }
+                    }
+                ],
+                "responses": {
+                  "201": {
+                    "schema": {
+                        "$ref": "#/definitions/Category"
+                    }
+                  },
+                  "400": {
+                      "description": "Category not found"
+                  }
+                },
+                "security": [{ "bearer_auth": []}]
+            },
+            "delete": {
+                "tags": ["categories"],
+                "summary": "Remove uma categoria",
+                "operationId": "delete",
+                "produces": [
+                  "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Parâmetro do campo 'id'",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                  "204": {
+                    "schema": {
+                        "message": "Categoria removida com sucesso"
+                    }
+                  },
+                  "400": {
+                      "description": "Category not found"
+                  }
+                },
+                "security": [{ "bearer_auth": []}]
+            },
+            "get": {
+                "tags": ["categories"],
+                "summary": "Busca uma categoria",
+                "operationId": "getById",
+                "produces": [
+                  "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Parâmetro do campo 'id'",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                  "200": {
+                    "schema": {
+                        "$ref": "#/definitions/Category"
+                    }
+                  },
+                  "400": {
+                      "description": "Category not found"
+                  }
+                },
+                "security": [{ "bearer_auth": []}]
+            }
+        },
+        "/movies": {
+            "post": {
+                "tags": ["movies"],
+                "summary": "Create a new video",
+                "operationId": "create",
+                "produces": [
+                  "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Fields are required for create a new video",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/CreateVideo"
+                        }
+                    }
+                ],
+                "responses": {
+                  "201": {
+                    "schema": {
+                        "$ref": "#/definitions/Video"
+                    }
+                  },
+                  "400": {
+                      "description": "Category not found"
+                  }
+                },
+                "security": [{ "bearer_auth": []}]
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "See more about Swagger",
+        "url": "https://swagger.io"
+    },
+    "definitions": {
+        "CreateCategory": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "example": {
+                "name": "Comedy",
+                "description": "Fun movies"
+            }
+        },
+        "UpdateCategory": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "example": {
+                "id": "7ec9533e-1923-4813-83cf-d5a0ac91138d",
+                "name": "Comedy",
+                "description": "Fun movies"
+            }
+        },
+        "Category": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string"
+              }
+            },
+            "example": {
+                "id": "7ec9533e-1923-4813-83cf-d5a0ac91138d",
+                "name": "Comedy",
+                "description": "Fun movies",
+                "created_at": "2022-03-07 12:00:00.000"
+            }
+        },
+        "Video": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "duration": {
+                "type": "integer"
+              },
+              "category": {
+                "schema": {
+                    "$ref": "#/definitions/Category"
+                }
+              },
+              "created_at": {
+                "type": "string"
+              }
+            },
+            "example": {
+                "id": "c84b0283-42e0-41fc-911c-6b6e8de37af6",
+                "name": "Video 001",
+                "description": "One day anyone",
+                "duration": 120,
+                "category": {
+                    "id": "7ec9533e-1923-4813-83cf-d5a0ac91138d",
+                    "name": "Comedy",
+                    "description": "Fun movies",
+                    "created_at": "2022-03-07 12:00:00.000"
+                },
+                "created_at": "2022-03-07 12:00:00.000"
+            }
+        },
+        "CreateVideo": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "duration": {
+                "type": "integer"
+              },
+              "category_id": {
+                "type": "string"
+              }
+            },
+            "example": {
+                "name": "Video 001",
+                "description": "One day anyone",
+                "duration": 120,
+                "category_id": "f1973648-e4cc-4fe7-a0b2-a2c43f7a1f35"
+            }
+        }
+    },
+    "securityDefinitions": {
+        "bearer_auth": {
+            "type": "bearer"
+        }
+    }
+}

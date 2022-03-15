@@ -1,4 +1,4 @@
-## CRUD to create records of movies and your categories
+# CRUD to create records of movies and your categories
 
 Technologies:
     - NodeJS
@@ -8,19 +8,19 @@ Technologies:
     - Docker
     - PostgreSQL
 
-# install dependencies
+### install dependencies
 - yarn install / npm install
 
-# mode development
+### mode development
 - yarn dev
 
-# build a dist folder to production
+### build a dist folder to production
 - yarn build
 
-# mode production (test environment local before to deploy)
+### mode production (test environment local before to deploy)
 - yarn start:windows
 
-# mode production (in docker container)
+### mode production (in docker container)
 - yarn start:docker
 
 PS: Before this, certificate yourself that docker is installed and online to deploy
